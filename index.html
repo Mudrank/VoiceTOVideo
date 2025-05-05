@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice to Video Generator</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Cal+Sans&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Cal Sans', sans-serif;
+      background: #0a1128;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    button {
+      margin: 1em;
+      padding: 1em 2em;
+      background: #1d3557;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    #subtitle {
+      margin-top: 2em;
+      font-size: 1.2em;
+      font-style: italic;
+      white-space: pre-line;
+    }
+    #recording-indicator {
+      margin-top: 1em;
+      color: #ff6b6b;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎤 Voice to Video Generator</h1>
+  <button id="startBtn">Start Recording</button>
+  <button id="stopBtn" disabled>Stop & Download</button>
+  <p id="recording-indicator">🔴 Recording...</p>
+  <p id="subtitle">Transcription will appear here...</p>
+
+  <script>
+    let mediaRecorder;
+    let audioChunks = [];
+    let recognition;
+    let finalTranscript = '';
+    let stream;
+
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const subtitle = document.getElementById('subtitle');
+    const recordingIndicator = document.getElementById('recording-indicator');
+
+    startBtn.onclick = async () => {
+      finalTranscript = '';
+      subtitle.innerText = 'Listening...';
+      recordingIndicator.style.display = 'block';
+
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      } catch (err) {
+        alert('Mic access denied or not available.');
+        return;
+      }
+
+      recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US';
+      recognition.continuous = true;
+      recognition.interimResults = true;
+
+      recognition.onresult = (event) => {
+        let interim = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          const result = event.results[i];
+          if (result.isFinal) {
+            finalTranscript += result[0].transcript + '\n';
+          } else {
+            interim += result[0].transcript;
+          }
+        }
+        subtitle.innerText = finalTranscript + interim;
+      };
+
+      recognition.onerror = (e) => {
+        console.error('Speech recognition error:', e.error);
+        subtitle.innerText = 'Speech recognition error. Try again.';
+      };
+
+      recognition.start();
+
+      mediaRecorder = new MediaRecorder(stream);
+      audioChunks = [];
+
+      mediaRecorder.ondataavailable = event => {
+        if (event.data.size > 0) audioChunks.push(event.data);
+      };
+
+      mediaRecorder.start();
+      startBtn.disabled = true;
+      stopBtn.disabled = false;
+    };
+
+    stopBtn.onclick = () => {
+      mediaRecorder.stop();
+      recognition.stop();
+      stream.getTracks().forEach(track => track.stop());
+      recordingIndicator.style.display = 'none';
+
+      const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+      const audioUrl = URL.createObjectURL(audioBlob);
+
+      const a = document.createElement('a');
+      a.href = audioUrl;
+      a.download = 'voice.webm';
+      a.click();
+
+      subtitle.innerText = finalTranscript || 'No speech detected.';
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+    };
+  </script>
+</body>
+</html>
