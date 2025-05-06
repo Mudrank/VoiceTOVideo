@@ -37,6 +37,25 @@
       <div class="transcription-box">
         <h2>📝 Transcription (Editable)</h2>
         <textarea id="subtitle" placeholder="Click 'Start Recording' to begin."></textarea>
+        <div class="filename-inputs">
+          <div class="input-group">
+            <label for="audioFileNameInput">Audio Filename:</label>
+            <input type="text" id="audioFileNameInput" placeholder="recorded_audio">
+            <span>.mp3</span>
+          </div>
+        
+          <div class="input-group">
+            <label for="videoFileNameInput">Video Filename:</label>
+            <input type="text" id="videoFileNameInput" placeholder="generated_video">
+            <span>.mp4 / .webm</span>
+          </div>
+        
+          <div class="input-group">
+            <label for="transcriptFileNameInput">Transcript Filename:</label>
+            <input type="text" id="transcriptFileNameInput" placeholder="transcript">
+            <span>.txt</span>
+          </div>
+        </div>
         <div id="waveform"></div>
       </div>
     </div>

@@ -1,279 +1,456 @@
+/* --- Variables --- */
 :root {
-    --bg-dark: #0a1128;
-    --bg-medium: #0d1b2a;
-    --bg-light: #1d3557;
-    --accent: #ff6b6b;
-    --accent-hover: #e63946;
-    --text-light: #f1faee;
-    --wave-bg: #1d3557;
-    --wave-color: #a8dadc;
-    --wave-progress: #ff6b6b;
-    --disabled-bg: #6c757d;
-    --focus-ring: #4ecdc4;
-    --error-color: #e63946;
-    --success-color: #52b788;
-    --warning-color: #fca311;
-  }
-  
-  body {
-    margin: 0;
-    font-family: 'Archivo', sans-serif;
-    background: var(--bg-dark);
-    color: var(--text-light);
-    display: flex;
-    min-height: 100vh;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
+  --bg-dark: #0a1128;
+  --bg-medium: #0d1b2a;
+  --bg-light: #1d3557;
+  --accent: #ff6b6b; /* Red-ish accent */
+  --accent-hover: #e63946; /* Darker red on hover */
+  --text-light: #f1faee; /* Light text */
+  --wave-bg: #1d3557; /* Background for waveform container */
+  --wave-color: #a8dadc; /* Base color for waveform bars */
+  --wave-progress: #ff6b6b; /* Color for played part of waveform */
+  --disabled-bg: #6c757d; /* Grey for disabled elements */
+  --focus-ring: #4ecdc4; /* Teal-ish for focus outline */
+  --error-color: #e63946; /* Red for errors */
+  --success-color: #52b788; /* Green for success */
+  --warning-color: #fca311; /* Orange for warnings */
+
+  /* Added subtle borders/shadows */
+  --border-subtle: rgba(255, 255, 255, 0.08); /* Very light white for borders */
+  --shadow-subtle: rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  --shadow-medium: rgba(0, 0, 0, 0.4); /* Medium shadow */
+}
+
+/* --- Base Styles --- */
+body {
+  margin: 0;
+  font-family: 'Archivo', sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  line-height: 1.6; /* Improved readability */
+}
+
+/* --- Container Layout --- */
+.container {
+  display: flex;
+  width: 95%; /* Slightly wider on larger screens */
+  max-width: 1300px; /* Increased max-width */
+  border-radius: 15px;
+  background: var(--bg-light);
+  box-shadow: 0 20px 60px var(--shadow-medium); /* Softer, larger shadow */
+  overflow: hidden;
+  flex-direction: column;
+  min-height: 80vh; /* Ensure it takes up substantial height */
+}
+
+@media (min-width: 992px) {
   .container {
-    display: flex;
-    width: 90%;
-    max-width: 1200px;
-    border-radius: 15px;
-    background: var(--bg-light);
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
-    overflow: hidden;
-    flex-direction: column;
-  }
-  
-  @media (min-width: 992px) {
-    .container {
       flex-direction: row;
-      min-height: 70vh;
-    }
+      min-height: 75vh; /* Adjusted min-height */
   }
-  
+}
+
+/* --- Controls Section --- */
+.controls {
+  flex: 1;
+  padding: 2.5em; /* Increased padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid var(--border-subtle); /* Subtle border */
+}
+
+@media (min-width: 992px) {
   .controls {
-    flex: 1;
-    padding: 2em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    border-bottom: 2px solid var(--bg-dark);
-  }
-  
-  @media (min-width: 992px) {
-    .controls {
       border-bottom: none;
-      border-right: 2px solid var(--bg-dark);
+      border-right: 1px solid var(--border-subtle); /* Subtle border */
       justify-content: center;
-    }
   }
-  
+}
+
+/* --- Headings --- */
+h1 {
+  margin-bottom: 1em;
+  font-size: 2.5em; /* Slightly larger */
+  text-align: center;
+  font-family: 'Cal Sans', sans-serif;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.03em; /* Tighter letter spacing for headings */
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 1em; /* Increased margin-bottom */
+  font-family: 'Cal Sans', sans-serif;
+  color: var(--accent);
+  font-size: 2em; /* Slightly larger */
+  letter-spacing: -0.02em;
+}
+
+/* --- Button Group --- */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 85%; /* Slightly wider */
+  max-width: 350px; /* Increased max-width */
+  margin-bottom: 2em; /* Increased margin-bottom */
+  gap: 10px; /* Added gap for consistent spacing */
+}
+
+/* --- Buttons --- */
+button {
+  /* Removed individual margin as gap is used in button-group */
+  padding: 14px 30px; /* Increased padding */
+  background: var(--accent);
+  color: var(--text-light);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, opacity 0.3s ease; /* Smoother transitions */
+  text-align: center;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 5px var(--shadow-subtle); /* Subtle shadow */
+}
+
+button:disabled {
+  background: var(--disabled-bg);
+  cursor: not-allowed;
+  opacity: 0.6; /* Slightly more visible opacity change */
+  box-shadow: none;
+  transform: none; /* No transform when disabled */
+}
+
+button:not(:disabled):hover {
+  background: var(--accent-hover);
+  transform: translateY(-3px); /* Slightly larger lift */
+  box-shadow: 0 6px 12px var(--shadow-medium); /* More pronounced shadow on hover */
+}
+
+button:not(:disabled):active {
+  transform: translateY(0px) scale(0.97); /* Slightly smaller press effect */
+  box-shadow: 0 2px 6px var(--shadow-subtle);
+}
+
+/* --- Audio Controls (Play/Pause/Duration) --- */
+#audio-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px; /* Increased margin */
+  width: 90%; /* Adjusted width */
+  max-width: 400px; /* Increased max-width */
+  gap: 15px; /* Added gap */
+}
+
+#audio-controls button {
+  margin: 0; /* Remove margin, use gap */
+  padding: 10px 25px; /* Adjusted padding */
+  font-size: 1em;
+  flex-shrink: 0;
+}
+
+#audio-duration {
+  font-size: 1.1em; /* Slightly larger */
+  color: var(--wave-color);
+  white-space: nowrap;
+  min-width: 4em; /* Give it a minimum width to prevent jumping */
+  text-align: center;
+}
+
+/* --- Transcription Box --- */
+.transcription-box {
+  flex: 1.5;
+  padding: 2.5em; /* Increased padding */
+  background-color: var(--bg-medium);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  min-height: 350px; /* Adjusted min-height */
+}
+
+/* --- Subtitle Textarea --- */
+#subtitle {
+  font-family: 'Archivo', sans-serif;
+  font-size: 1.1em;
+  line-height: 1.7; /* Increased line height for better readability */
+  white-space: pre-wrap;
+  text-align: left;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-subtle); /* Subtle border */
+  border-radius: 8px;
+  color: var(--text-light);
+  padding: 15px;
+  resize: vertical;
+  width: 100%;
+  box-sizing: border-box;
+  flex-grow: 1;
+  min-height: 180px; /* Adjusted min-height */
+  margin-bottom: 1.5em;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Smoother transitions */
+  outline: none; /* Remove default outline */
+}
+
+#subtitle:focus {
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.4); /* More opaque focus ring */
+  background-color: lighten(var(--bg-dark), 3%); /* Slightly lighter background on focus (requires CSS preprocessor or similar technique, keeping it simple here) */
+  /* Simpler: just keep bg-dark */
+   background-color: var(--bg-dark);
+}
+
+#subtitle:read-only {
+  background-color: #1a2539; /* Slightly different shade for read-only */
+  cursor: default;
+  border-color: var(--bg-light);
+  box-shadow: none;
+}
+
+/* --- Waveform Container --- */
+#waveform {
+  width: 100%;
+  background: var(--wave-bg);
+  border-radius: 8px;
+  margin-top: auto; /* Pushes to the bottom */
+  cursor: pointer;
+  min-height: 100px; /* Adjusted min-height */
+  overflow: hidden; /* Hide potential overflow from waveform drawing */
+  /* Added subtle shadow or border */
+  border: 1px solid var(--border-subtle);
+  box-shadow: inset 0 2px 5px var(--shadow-subtle); /* Inner shadow */
+
+  /* Style for the text inside if WaveSurfer fails */
+  display: flex; /* Use flex to center text */
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+  color: var(--wave-color);
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#waveform > div {
+   /* Ensure the Wavesurfer element inside fills the container */
+   width: 100%;
+   height: 100%;
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
   h1 {
-    margin-bottom: 1em;
-    font-size: 2.2em;
-    text-align: center;
-    font-family: 'Cal Sans', sans-serif;
-    font-weight: 700;
-    color: var(--accent);
+      font-size: 2em;
   }
-  
-  .button-group {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    width: 80%;
-    max-width: 300px;
-    margin-bottom: 1.5em;
-  }
-  
-  button {
-    margin: 8px 0;
-    padding: 12px 25px;
-    background: var(--accent);
-    color: var(--text-light);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1.1em;
-    font-family: 'Archivo', sans-serif;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    text-align: center;
-  }
-  
-  button:disabled {
-    background: var(--disabled-bg);
-    cursor: not-allowed;
-    opacity: 0.7;
-  }
-  
-  button:not(:disabled):hover {
-    background: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  button:not(:disabled):active {
-    transform: translateY(0px) scale(0.98);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-  
-  #audio-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 15px;
-    width: 80%;
-    max-width: 300px;
-  }
-  
-  #audio-controls button {
-    margin: 0 10px 0 0;
-    padding: 10px 20px;
-    font-size: 1em;
-    flex-shrink: 0;
-  }
-  
-  #audio-duration {
-    font-size: 1em;
-    color: var(--wave-color);
-    white-space: nowrap;
-  }
-  
-  .transcription-box {
-    flex: 1.5;
-    padding: 2em;
-    background-color: var(--bg-medium);
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    min-height: 300px;
-  }
-  
   h2 {
-    margin-top: 0;
-    margin-bottom: 0.8em;
-    font-family: 'Cal Sans', sans-serif;
-    color: var(--accent);
-    font-size: 1.8em;
+      font-size: 1.7em;
   }
-  
+  .button-group {
+      width: 95%;
+  }
+  button {
+      font-size: 1em;
+      padding: 12px 25px;
+  }
+  .controls,
+  .transcription-box {
+      padding: 2em; /* Adjusted padding */
+  }
   #subtitle {
-    font-family: 'Archivo', sans-serif;
-    font-size: 1.1em;
-    line-height: 1.6;
-    white-space: pre-wrap;
-    text-align: left;
-    background: var(--bg-dark);
-    border: 1px solid var(--bg-light);
-    border-radius: 8px;
-    color: var(--text-light);
-    padding: 15px;
-    resize: vertical;
-    width: 100%;
-    box-sizing: border-box;
-    flex-grow: 1;
-    min-height: 150px;
-    margin-bottom: 1.5em;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+      font-size: 1em;
+      min-height: 180px;
   }
-  
-  #subtitle:focus {
-    border-color: var(--focus-ring);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.3);
+  .transcription-box {
+      min-height: 300px;
   }
-  
-  #subtitle:read-only {
-    background-color: #2b2f3a;
-    cursor: default;
-    border-color: var(--bg-light);
-    box-shadow: none;
-  }
-  
   #waveform {
-    width: 100%;
-    background: var(--wave-bg);
-    border-radius: 8px;
-    margin-top: auto;
-    cursor: pointer;
-    min-height: 80px;
+      min-height: 80px;
   }
-  
-  @media (max-width: 768px) {
-    h1 {
-      font-size: 1.8em;
-    }
-    h2 {
-      font-size: 1.5em;
-    }
-    .button-group {
-      width: 90%;
-    }
-    button {
-      font-size: 1em;
-      padding: 10px 20px;
-    }
-    .controls,
-    .transcription-box {
-      padding: 1.5em;
-    }
-    #subtitle {
-      font-size: 1em;
-    }
-    .transcription-box {
-      min-height: 250px;
-    }
-    #waveform {
-      min-height: 60px;
-    }
+  #audio-controls {
+      width: 100%;
   }
-  
-  #recording-indicator {
-    margin-top: 15px;
-    color: var(--accent);
-    font-weight: bold;
-    display: none;
-    font-size: 1.2em;
-  }
-  
-  #status {
-    margin-top: 15px;
-    font-weight: bold;
-    font-size: 1.1em;
-    min-height: 1.5em;
-    text-align: center;
-    padding: 5px 10px;
-    border-radius: 5px;
-    width: 90%;
-    max-width: 400px;
-    box-sizing: border-box;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-  }
-  
-  #status.visible {
-    opacity: 1;
-  }
-  
-  #status.error {
-    color: var(--text-light);
-    background-color: var(--error-color);
-  }
-  
-  #status.success {
-    color: var(--bg-dark);
-    background-color: var(--success-color);
-  }
-  
-  #status.warning {
-    color: var(--bg-dark);
-    background-color: var(--warning-color);
-  }
-  
-  #status.info {
-    color: var(--wave-color);
-    background-color: transparent;
-  }
-  
-  #status.processing {
-    color: var(--wave-color);
-    background-color: var(--bg-medium);
-  }
-  
+   .input-group {
+      flex-direction: column;
+      align-items: stretch;
+   }
+   .input-group label,
+   .input-group input,
+   .input-group span {
+      flex: none;
+      width: 100%;
+   }
+   .input-group input {
+      margin-top: 5px;
+   }
+}
+
+
+/* --- Recording Indicator Animation --- */
+#recording-indicator {
+  margin-top: 15px;
+  color: var(--accent);
+  font-weight: bold;
+  display: flex; /* Use flex to center text and dot */
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.3s ease; /* Smooth fade in/out */
+}
+
+#recording-indicator.visible { /* Added class to manage visibility via JS */
+  opacity: 1;
+}
+
+
+#recording-indicator::before {
+  content: '•'; /* Recording dot */
+  margin-right: 8px;
+  font-size: 1.5em;
+  line-height: 1;
+  animation: pulse 1.5s infinite ease-out; /* Apply pulse animation */
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+
+/* --- Status Message Styles --- */
+#status {
+  margin-top: 20px; /* Increased margin */
+  font-weight: 600; /* Slightly bolder */
+  font-size: 1.1em;
+  min-height: 1.8em; /* Increased min-height for better spacing */
+  text-align: center;
+  padding: 8px 15px; /* Increased padding */
+  border-radius: 8px; /* Rounded corners */
+  width: 95%; /* Slightly wider */
+  max-width: 500px; /* Increased max-width */
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out, background-color 0.3s ease, color 0.3s ease; /* Smoother transitions */
+  word-break: break-word; /* Prevent long messages from overflowing */
+}
+
+#status.visible {
+  opacity: 1;
+}
+
+#status.error {
+  color: var(--text-light);
+  background-color: var(--error-color);
+}
+
+#status.success {
+  color: var(--bg-dark); /* Use dark text on light success background */
+  background-color: var(--success-color);
+}
+
+#status.warning {
+  color: var(--bg-dark); /* Use dark text on light warning background */
+  background-color: var(--warning-color);
+}
+
+#status.info {
+  color: var(--wave-color);
+  background-color: transparent; /* Info is just text */
+  padding: 0; /* Remove padding for info */
+  min-height: 1.5em; /* Smaller min-height for info */
+}
+
+#status.processing {
+  color: var(--wave-color);
+  background-color: var(--bg-medium); /* Processing has a background */
+}
+
+/* --- Filename Inputs --- */
+.filename-inputs {
+  margin-top: 1.5em; /* Increased margin */
+  width: 90%; /* Adjusted width */
+  max-width: 400px; /* Adjusted max-width */
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px; /* Increased margin */
+  justify-content: space-between;
+  gap: 15px; /* Increased gap */
+  font-size: 1em;
+}
+
+.input-group label {
+  flex-shrink: 0; /* Prevent label from shrinking */
+  color: var(--text-light);
+  font-weight: 500;
+  min-width: 80px; /* Give labels a minimum width */
+}
+
+.input-group input {
+  flex-grow: 1; /* Allow input to grow */
+  padding: 10px 12px; /* Adjusted padding */
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle); /* Subtle border */
+  background: var(--bg-dark); /* Darker background for inputs */
+  color: var(--text-light);
+  font-size: 1em;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Added transitions */
+  outline: none; /* Remove default outline */
+}
+
+.input-group input:focus {
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.4); /* More opaque focus ring */
+  background-color: lighten(var(--bg-dark), 3%); /* Slightly lighter background on focus (requires CSS preprocessor or similar technique, keeping it simple here) */
+  /* Simpler: just keep bg-dark */
+   background-color: var(--bg-dark);
+}
+
+
+.input-group span {
+  flex-shrink: 0; /* Prevent span from shrinking */
+  color: var(--wave-color);
+  font-size: 0.95em;
+  min-width: 4em; /* Give span a minimum width */
+  text-align: left;
+}
+
+/* Style scrollbars for dark theme (optional, browser support varies) */
+/* Works in Chrome, Edge, Safari */
+::-webkit-scrollbar {
+width: 10px;
+}
+
+::-webkit-scrollbar-track {
+background: var(--bg-medium);
+}
+
+::-webkit-scrollbar-thumb {
+background: var(--bg-light);
+border-radius: 5px;
+border: 2px solid var(--bg-medium);
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: var(--bg-dark);
+}
+
+/* Works in Firefox */
+* {
+scrollbar-width: thin;
+scrollbar-color: var(--bg-light) var(--bg-medium);
+}
